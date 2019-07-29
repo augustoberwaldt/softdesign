@@ -73,7 +73,7 @@ public class ScheduleService {
         Long timestart =  Long.parseLong(data.get("timestart").toString());
         Long timeend =  Long.parseLong(data.get("timeend").toString());
 
-        boolean dtFinish = Boolean.parseBoolean(data.get("timestart").toString());
+        boolean dtFinish = Boolean.parseBoolean(data.get("dtFinish").toString());
         int time =  Integer.parseInt(data.get("time").toString());
 
         Schedule schedule = this.get(scheduleId);

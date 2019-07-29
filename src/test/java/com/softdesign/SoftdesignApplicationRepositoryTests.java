@@ -31,13 +31,6 @@ public class SoftdesignApplicationRepositoryTests {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
-
     @Test
     public void whenFindByCpf_thenReturnAssociate() {
         Associate associate = new Associate();
@@ -50,7 +43,6 @@ public class SoftdesignApplicationRepositoryTests {
         Associate associateFound = associateRepository.findByCpf("01610383010");
         assertThat(associate.getCpf()).isEqualTo("01610383010");
     }
-
 
     @Test
     public void whenFindById_thenReturnSchedule() {
@@ -65,13 +57,5 @@ public class SoftdesignApplicationRepositoryTests {
         assertThat(scheduleFound.getTitle()).isEqualTo("Pauta sobre TesteUnitario");
     }
 
-    @Test
-    public void givenEmployees_whenGetEmployees_thenReturnJsonArray()
-            throws Exception {
-
-
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/ping",
-                String.class)).contains("pong");
-    }
 
 }

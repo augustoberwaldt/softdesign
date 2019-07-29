@@ -71,6 +71,10 @@ public class ApiController {
     @PutMapping(path = "/schedule/updateSchedule",  produces = "application/json",  consumes = "application/json")
     public  ResponseEntity<JsonNode>   updateSchedule(@RequestBody Map<String, Object> payload) {
 
+        if (logger.isDebugEnabled()) {
+            logger.info("Requisição de entrada updateSchedule :" + payload.toString());
+        }
+
         JsonNode reponse = JsonNodeFactory.instance.objectNode();
 
         try {
