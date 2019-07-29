@@ -9,6 +9,10 @@ seria so  subir um docker de outro banco e alterar application.yml.
 https://softdesignbrasil.herokuapp.com/swagger-ui.html
 
 
+###### Interface para acessar Banco H2
+
+localhost:8080/db
+
 ##### Tecnologias Utilizadas
 - Linguagem de Programação Java
 - Spring Boot

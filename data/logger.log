@@ -278,3 +278,8 @@
 2019-07-29 07:46:57.567 DEBUG 8864 --- [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
 2019-07-29 07:46:57.568 DEBUG 8864 --- [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [[{id=1, title='sdvsdvsdv', description='sdvsdvsdvsdv', dtCreated=2019-07-29 00:19:37.003, dtFinish=n (truncated)...]
 2019-07-29 07:46:57.571 DEBUG 8864 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2019-07-29 09:30:58.302 DEBUG 8864 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/v1/schedule/getSchedules", parameters={}
+2019-07-29 09:30:58.303 DEBUG 8864 --- [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public java.util.List<com.softdesign.entity.Schedule> com.softdesign.controller.ApiController.getSchedules()
+2019-07-29 09:30:58.315 DEBUG 8864 --- [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2019-07-29 09:30:58.317 DEBUG 8864 --- [http-nio-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [[{id=1, title='sdvsdvsdv', description='sdvsdvsdvsdv', dtCreated=2019-07-29 00:19:37.003, dtFinish=n (truncated)...]
+2019-07-29 09:30:58.319 DEBUG 8864 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK

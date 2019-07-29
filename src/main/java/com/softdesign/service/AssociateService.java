@@ -4,7 +4,10 @@ import com.softdesign.entity.Associate;
 import com.softdesign.repository.AssociateRepository;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * Clase Responsavel  pelas regras de negocio dos Associados
+ * @author  Augusto Berwaldt de Oliveira
+ */
 @Service
 public class AssociateService {
 

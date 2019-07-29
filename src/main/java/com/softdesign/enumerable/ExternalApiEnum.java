@@ -2,7 +2,7 @@ package com.softdesign.enumerable;
 
 public enum ExternalApiEnum {
 
-    VALIDATECPFURI("https://user-info.herokuapp.com/users/");
+    VALIDATE_CPF_URI("https://user-info.herokuapp.com/users/");
 
     private String value;
 

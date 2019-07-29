@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Clase Responsavel  pelas regras de negocio das  Pauta
+ * @author  Augusto Berwaldt de Oliveira
+ */
 @Service
 public class ScheduleService {
 
@@ -57,6 +61,12 @@ public class ScheduleService {
         return count;
     }
 
+    /**
+     * Metodo responsavel por
+     *
+     * @param data
+     * @return
+     */
     public Schedule parser(Map<String, Object> data) {
 
         Long scheduleId =  Long.parseLong(data.get("schedule").toString());

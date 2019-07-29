@@ -12,6 +12,8 @@ import com.softdesign.repository.AssociateRepository;
 import com.softdesign.repository.ScheduleRepository;
 import com.softdesign.repository.VoteRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,8 +22,16 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Clase Responsavel  pelas regras de negocio dos votos da Pauta
+ * @author  Augusto Berwaldt de Oliveira
+ */
 @Service
 public class VoteService {
+
+    private final int HTTP_CONNECT_TIMEOUT = 15000;
+
+    private final int HTTP_READ_TIMEOUT = 10000;
 
     private final VoteRepository voteRepository;
 
@@ -139,11 +149,11 @@ public class VoteService {
      */
     public void  validateCpf(String cpf) throws IllegalArgumentException {
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 
         try {
 
-            ResponseEntity<String> response = restTemplate.getForEntity(ExternalApiEnum.VALIDATECPFURI.getValue() + "/" + cpf, String.class);
+            ResponseEntity<String> response = restTemplate.getForEntity(ExternalApiEnum.VALIDATE_CPF_URI.getValue() + "/" + cpf, String.class);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
             String status = jsonNode.get("status").asText();
@@ -161,5 +171,17 @@ public class VoteService {
 
         }
 
+    }
+
+    /**
+     * Nesse metodo aumentamos timeout, pois requisicao heroku pode demorar ate subir container
+     *
+     * @return
+     */
+    private ClientHttpRequestFactory getClientHttpRequestFactory() {
+        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        clientHttpRequestFactory.setConnectTimeout(HTTP_CONNECT_TIMEOUT);
+        clientHttpRequestFactory.setReadTimeout(HTTP_READ_TIMEOUT);
+        return clientHttpRequestFactory;
     }
 }
