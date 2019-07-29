@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/augustoberwaldt/softdesign.svg?branch=master)](https://travis-ci.org/augustoberwaldt/softdesign)
+
 ##### Conciderações
 
 Escolhi o spring boot para realizar teste , por ser facil de levantar servidor e ja ter bastante abstrações programação. 
