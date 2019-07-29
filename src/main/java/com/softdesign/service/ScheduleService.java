@@ -61,13 +61,22 @@ public class ScheduleService {
 
         Long scheduleId =  Long.parseLong(data.get("schedule").toString());
         Long timestart =  Long.parseLong(data.get("timestart").toString());
+        Long timeend =  Long.parseLong(data.get("timeend").toString());
+
+        boolean dtFinish = Boolean.parseBoolean(data.get("timestart").toString());
         int time =  Integer.parseInt(data.get("time").toString());
 
-
         Schedule schedule = this.get(scheduleId);
-        Date dtStarted = this.addMinutesToDate(timestart, new Date());
-        schedule.setDtStarted(dtStarted);
-        schedule.setTime(time);
+
+        if (dtFinish) {
+            Date dtEnd  = this.addMinutesToDate(timeend, new Date());
+            schedule.setDtFinish(dtEnd);
+        } else {
+            Date dtStarted = this.addMinutesToDate(timestart, new Date());
+            schedule.setDtStarted(dtStarted);
+            schedule.setTime(time);
+
+        }
 
         return  schedule;
     }
@@ -75,7 +84,7 @@ public class ScheduleService {
     private  Date addMinutesToDate(Long  minutes, Date beforeTime) {
 
         long curTimeInMs = beforeTime.getTime();
-        Date afterAddingMins = new Date(curTimeInMs + minutes );
+        Date afterAddingMins = new Date(curTimeInMs + minutes);
         return afterAddingMins;
     }
 

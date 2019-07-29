@@ -96,8 +96,8 @@ public class ApiController {
 
           this.voteService.validateData(payload);
           Vote vote = this.voteService.parser(payload);
-          ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
           this.voteService.save(vote);
+          ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
         } catch (Exception e) {
             ((ObjectNode) reponse).put("status", Translator.toLocale("error"));
             ((ObjectNode) reponse).put("msg", e.getMessage());

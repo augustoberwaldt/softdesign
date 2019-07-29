@@ -55,6 +55,8 @@ public class VoteService {
      */
     public void validateData(Map<String, Object> data) throws IllegalArgumentException, BusinessException {
 
+        //TODO
+
         String cpf =  data.get("associate").toString();
         Long scheduleId =  Long.parseLong(data.get("schedule").toString());
         String vote =  data.get("vote").toString();
@@ -63,7 +65,7 @@ public class VoteService {
             throw new IllegalArgumentException(Translator.toLocale(Translator.toLocale("cpf_empty")));
         }
 
-        Associate associate  = associateRepository.findByCpf(cpf);
+        Associate associate  = this.associateRepository.findByCpf(cpf);
 
         if (associate == null) {
             throw new IllegalArgumentException(Translator.toLocale(Translator.toLocale("cpf_associate")));
@@ -79,30 +81,42 @@ public class VoteService {
 
         Schedule schedule = scheduleOptional.get();
 
-
-
-
         Date now =  new Date();
 
-//        if (!(now.after(schedule.getDtCreated()) && now.before(schedule.getDtFinish()))) {
-//            throw new BusinessException(Translator.toLocale(Translator.toLocale("periodo_invalid")));
-//        }
+        if (!(now.after(schedule.getDtStarted()) && now.before(schedule.getDtFinish()))) {
+            throw new BusinessException(Translator.toLocale(Translator.toLocale("periodo_invalid")));
+        }
 
     }
 
     /**
-     *  Converte dados de entrada para objeto Vote
-     *
+     * Converte dados de entrada para objeto Vote
      * @param data
      * @return
+     * @throws IllegalArgumentException
+     * @throws BusinessException
      */
-    public Vote parser(Map<String, Object> data) {
+    public Vote parser(Map<String, Object> data) throws IllegalArgumentException, BusinessException  {
 
         String cpf =  data.get("associate").toString();
-        Long scheduleId =  Long.parseLong(data.get("associate").toString());
-        String vote =  data.get("associate").toString();
+        Long scheduleId =  Long.parseLong(data.get("schedule").toString());
+        int vote =  Integer.parseInt(data.get("vote").toString());
 
-        return this.getVoteByCpfAndScheduleId(cpf, scheduleId);
+        Vote oVote  = this.getVoteByCpfAndScheduleId(cpf, scheduleId);
+
+        if (oVote !=null) {
+            throw new IllegalArgumentException(Translator.toLocale(Translator.toLocale("cpf_vote")));
+        }
+
+        Optional<Schedule> scheduleOptional  = this.scheduleRepository.findById(scheduleId);
+
+        oVote  = new  Vote();
+
+        oVote.setAssociate(this.associateRepository.findByCpf(cpf));
+        oVote.setSchedule(scheduleOptional.get());
+        oVote.setVote(vote);
+
+        return oVote;
     }
 
     /**

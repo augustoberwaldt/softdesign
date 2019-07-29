@@ -1020,3 +1020,6 @@ INSERT INTO[*]  ASSOCIATE(ID,CPF,EMAIL,NAME)  VALUES (1, '01610383010','augusto.
 SELECT * FROM ASSOCIATE 
 
 INSERT INTO  ASSOCIATE(ID,CPF,EMAIL,NAME)  VALUES (1, '01610383010','augusto.berwaldt@gmail.com','Augusto') [42000-199]
+2019-07-28 23:11:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]#INSERT INTO ASSOCIATE(ID, CPF, EMAIL, NAME) VALUES (1, '01610383010','augusto.berwaldt@gmail.com','Augusto')"; SQL statement:
+#INSERT INTO ASSOCIATE(ID, CPF, EMAIL, NAME) VALUES (1, '01610383010','augusto.berwaldt@gmail.com','Augusto') [42000-199]

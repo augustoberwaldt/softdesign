@@ -18,6 +18,16 @@ public class Vote {
     @ManyToOne
     private Associate associate;
 
+    private int vote;
+
+    public int getVote() {
+        return vote;
+    }
+
+    public void setVote(int vote) {
+        this.vote = vote;
+    }
+
     public Long getId() {
         return id;
     }
