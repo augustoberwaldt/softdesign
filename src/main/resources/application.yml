@@ -5,11 +5,16 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      #create-drop
+      ddl-auto: update
   datasource:
-    #url#spring.datasource.url=jdbc:h2:~/test:file:./data/app_db;DB_CLOSE_ON_EXIT=FALSE
-    url: jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE
+    #salva em disco
+    url: jdbc:h2:file:./data/app_db;DB_CLOSE_ON_EXIT=FALSE
+    # salva em memoria
+    #url: jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE
     platform: h2
+    username: sa
+    password:
   devtools:
     remote:
       debug:

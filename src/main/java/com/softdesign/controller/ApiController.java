@@ -1,5 +1,8 @@
 package com.softdesign.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.softdesign.config.Translator;
 import com.softdesign.entity.Associate;
 import com.softdesign.entity.Schedule;
@@ -13,10 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ApiController {
 
     Logger logger = LoggerFactory.getLogger(ApiController.class);
@@ -27,7 +32,6 @@ public class ApiController {
 
     private final VoteService voteService;
 
-
     public ApiController(ScheduleService scheduleService, AssociateService  associateService,  VoteService voteService) {
         this.scheduleService = scheduleService;
         this.associateService = associateService;
@@ -35,45 +39,83 @@ public class ApiController {
     }
 
 
-    @RequestMapping(method=RequestMethod.POST,  path = "/schedule/createSchedule",  produces = "application/json",  consumes = "application/json")
-    public  ResponseEntity<String>   createSchedule(@RequestBody Schedule schedule) {
+    @PostMapping(path = "/schedule/createSchedule",  produces = "application/json",  consumes = "application/json")
+    public  ResponseEntity<JsonNode>   createSchedule(@RequestBody Schedule schedule) {
+
 
         if (logger.isDebugEnabled()) {
             logger.info("Requisição de entrada createSchedule :" + schedule.toString());
         }
 
+        JsonNode reponse = JsonNodeFactory.instance.objectNode();
+
         try {
 
             this.scheduleService.save(schedule);
+            ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            ((ObjectNode) reponse).put("status", Translator.toLocale("error"));
+            ((ObjectNode) reponse).put("msg", e.getMessage());
+            return ResponseEntity.badRequest().body(reponse);
         }
 
-        return ResponseEntity.ok(Translator.toLocale("ok"));
+        return ResponseEntity.ok(reponse);
     }
 
-    @RequestMapping(method=RequestMethod.POST,  path = "/schedule/addVote",  produces = "application/json",  consumes = "application/json")
-    public  ResponseEntity<String>   createSchedule(@RequestBody Map<String, Object> payload) {
+    @GetMapping(path = "/schedule/getSchedules",  produces = "application/json")
+    public List<Schedule> getSchedules() {
+        return  this.scheduleService.getAll();
+    }
+
+    @PutMapping(path = "/schedule/updateSchedule",  produces = "application/json",  consumes = "application/json")
+    public  ResponseEntity<JsonNode>   updateSchedule(@RequestBody Map<String, Object> payload) {
+
+        JsonNode reponse = JsonNodeFactory.instance.objectNode();
+
+        try {
+
+            Schedule schedule = this.scheduleService.parser(payload);
+            this.scheduleService.update(schedule);
+            ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
+        } catch (Exception e) {
+            ((ObjectNode) reponse).put("status", Translator.toLocale("error"));
+            ((ObjectNode) reponse).put("msg", e.getMessage());
+            return ResponseEntity.badRequest().body(reponse);
+        }
+
+        return ResponseEntity.ok(reponse);
+    }
+
+    @PostMapping( path = "/schedule/addVote",  produces = "application/json",  consumes = "application/json")
+    public  ResponseEntity<JsonNode>   createSchedule(@RequestBody Map<String, Object> payload) {
+
+        JsonNode reponse = JsonNodeFactory.instance.objectNode();
 
         try {
 
           this.voteService.validateData(payload);
           Vote vote = this.voteService.parser(payload);
+          ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
           this.voteService.save(vote);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            ((ObjectNode) reponse).put("status", Translator.toLocale("error"));
+            ((ObjectNode) reponse).put("msg", e.getMessage());
+            return ResponseEntity.badRequest().body(reponse);
         }
 
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok(reponse);
     }
 
 
-    @RequestMapping(method=RequestMethod.POST,  path = "/associate/createAssociate",  produces = "application/json",  consumes = "application/json")
-    public  ResponseEntity<String>   createAssociate(@RequestBody Associate associate) {
+    @PostMapping(path = "/associate/createAssociate",  produces = "application/json",  consumes = "application/json")
+    public  ResponseEntity<JsonNode>   createAssociate(@RequestBody Associate associate) {
 
         if (logger.isDebugEnabled()) {
             logger.info("Requisição de entrada  createAssociate :" + associate.toString());
         }
+
+        JsonNode reponse = JsonNodeFactory.instance.objectNode();
 
         try {
 
@@ -82,12 +124,15 @@ public class ApiController {
             }
 
             this.associateService.save(associate);
+            ((ObjectNode) reponse).put("status", Translator.toLocale("ok"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            ((ObjectNode) reponse).put("status", Translator.toLocale("error"));
+            ((ObjectNode) reponse).put("msg", e.getMessage());
+
+            return ResponseEntity.badRequest().body(reponse);
         }
 
-        return ResponseEntity.ok(Translator.toLocale("ok"));
+        return ResponseEntity.ok(reponse);
     }
-
 
 }

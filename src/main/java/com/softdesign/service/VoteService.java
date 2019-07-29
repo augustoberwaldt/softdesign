@@ -3,10 +3,12 @@ package com.softdesign.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softdesign.config.Translator;
+import com.softdesign.entity.Associate;
 import com.softdesign.entity.Schedule;
 import com.softdesign.entity.Vote;
 import com.softdesign.enumerable.ExternalApiEnum;
 import com.softdesign.exception.BusinessException;
+import com.softdesign.repository.AssociateRepository;
 import com.softdesign.repository.ScheduleRepository;
 import com.softdesign.repository.VoteRepository;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +27,13 @@ public class VoteService {
 
     private final ScheduleRepository  scheduleRepository;
 
-    public VoteService(VoteRepository voteRepository, ScheduleRepository  scheduleRepository) {
+    private final AssociateRepository  associateRepository;
+
+    public VoteService(VoteRepository voteRepository, ScheduleRepository  scheduleRepository, AssociateRepository  associateRepository) {
         this.voteRepository = voteRepository;
         this.scheduleRepository = scheduleRepository;
+        this.associateRepository = associateRepository;
+
     }
 
 
@@ -57,7 +63,13 @@ public class VoteService {
             throw new IllegalArgumentException(Translator.toLocale(Translator.toLocale("cpf_empty")));
         }
 
-       // this.validateCpf(cpf);
+        Associate associate  = associateRepository.findByCpf(cpf);
+
+        if (associate == null) {
+            throw new IllegalArgumentException(Translator.toLocale(Translator.toLocale("cpf_associate")));
+        }
+
+        this.validateCpf(cpf);
 
         Optional<Schedule> scheduleOptional  = this.scheduleRepository.findById(scheduleId);
 
@@ -67,11 +79,14 @@ public class VoteService {
 
         Schedule schedule = scheduleOptional.get();
 
+
+
+
         Date now =  new Date();
 
-        if (!(now.after(schedule.getDtCreated()) && now.before(schedule.getDtFinish()))) {
-            throw new BusinessException(Translator.toLocale(Translator.toLocale("periodo_invalid")));
-        }
+//        if (!(now.after(schedule.getDtCreated()) && now.before(schedule.getDtFinish()))) {
+//            throw new BusinessException(Translator.toLocale(Translator.toLocale("periodo_invalid")));
+//        }
 
     }
 

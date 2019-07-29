@@ -26,10 +26,20 @@ public class Schedule {
     private  String description;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private  Date dtCreated;
+    private  Date dtStarted;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private  Date dtFinish;
+
+    private int time;
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 
     public Long getId() {
         return id;
@@ -51,12 +61,12 @@ public class Schedule {
         this.description = description;
     }
 
-    public Date getDtCreated() {
-        return dtCreated;
+    public Date getDtStarted() {
+        return dtStarted;
     }
 
-    public void setDtCreated(Date dtCreated) {
-        this.dtCreated = dtCreated;
+    public void setDtStarted(Date dtStarted) {
+        this.dtStarted = dtStarted;
     }
 
     public Date getDtFinish() {
@@ -73,7 +83,7 @@ public class Schedule {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", dtCreated=" + dtCreated +
+                ", dtCreated=" + dtStarted +
                 ", dtFinish=" + dtFinish +
                 '}';
     }

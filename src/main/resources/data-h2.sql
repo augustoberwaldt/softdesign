@@ -1,3 +1,1 @@
-/*
-
- */
+INSERT INTO  ASSOCIATE(ID, CPF, EMAIL, NAME)  VALUES (1, '01610383010','augusto.berwaldt@gmail.com','Augusto');

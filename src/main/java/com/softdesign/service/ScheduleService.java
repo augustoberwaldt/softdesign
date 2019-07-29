@@ -4,10 +4,7 @@ import com.softdesign.entity.Schedule;
 import com.softdesign.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ScheduleService {
@@ -28,7 +25,19 @@ public class ScheduleService {
         this.scheduleRepository.save(schedule);
     }
 
+    public List<Schedule> getAll()   {
+        return this.scheduleRepository.findAll();
+    }
 
+    /**
+     * Busca uma pauta pelo id
+     *
+     * @param id
+     * @return
+     */
+    public Schedule get(Long id) {
+        return this.scheduleRepository.findById(id).get();
+    }
 
     /**
      * Calcula diferenca entre duas  datas
@@ -48,4 +57,34 @@ public class ScheduleService {
         return count;
     }
 
+    public Schedule parser(Map<String, Object> data) {
+
+        Long scheduleId =  Long.parseLong(data.get("schedule").toString());
+        Long timestart =  Long.parseLong(data.get("timestart").toString());
+        int time =  Integer.parseInt(data.get("time").toString());
+
+
+        Schedule schedule = this.get(scheduleId);
+        Date dtStarted = this.addMinutesToDate(timestart, new Date());
+        schedule.setDtStarted(dtStarted);
+        schedule.setTime(time);
+
+        return  schedule;
+    }
+
+    private  Date addMinutesToDate(Long  minutes, Date beforeTime) {
+
+        long curTimeInMs = beforeTime.getTime();
+        Date afterAddingMins = new Date(curTimeInMs + minutes );
+        return afterAddingMins;
+    }
+
+    /**
+     * Update pauta na base
+     *
+     * @param schedule
+     */
+    public void update(Schedule schedule) {
+        this.save(schedule);
+    }
 }
