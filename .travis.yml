@@ -1,11 +1,11 @@
 language: java
 jdk:
-- openjdk11
+  - oraclejdk8
 install:
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-- mvn test-compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn test-compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
-- mvn -Psoftdesign clean compile
+  - mvn -Psoftdesign clean compile
 after_success:
   - mvn coveralls:report
 
