@@ -15,9 +15,14 @@ https://softdesignbrasil.herokuapp.com/swagger-ui.html
 
 localhost:8080/db
 
+###### Interface para acessar swagger
+
+localhost:8080/swagger-ui.html
+
 ##### Tecnologias Utilizadas
 - Linguagem de Programação Java
 - Spring Boot
 - Banco de dados H2
 - swagger
 - Junit
+- Heroku Cloud
