@@ -6,7 +6,7 @@ seria so  subir um docker de outro banco e alterar application.yml.
 
 ##### Link da aplicação no Heroku
 
-https://softdesignbrasil.herokuapp.com
+https://softdesignbrasil.herokuapp.com/swagger-ui.html
 
 
 ##### Tecnologias Utilizadas
