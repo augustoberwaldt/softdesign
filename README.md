@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e52996a93abe4f0cac08457f34b9fe78)](https://app.codacy.com/app/augustoberwaldt/softdesign?utm_source=github.com&utm_medium=referral&utm_content=augustoberwaldt/softdesign&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/augustoberwaldt/softdesign.svg?branch=master)](https://travis-ci.org/augustoberwaldt/softdesign)
 
 ##### Conciderações
